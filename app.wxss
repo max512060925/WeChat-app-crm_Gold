@@ -1,0 +1,4 @@
+/**app.wxss**/
+page{
+  font-family: "SimHei", "Heiti SC", "微软雅黑", "Microsoft YaHei", "黑体";
+}

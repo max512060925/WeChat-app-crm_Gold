@@ -1,0 +1,208 @@
+/**index.wxss**/
+#container{
+  height: 100vh;
+  -webkit-overflow-scrolling : touch; 
+}
+.listBar {
+  height: calc(100vh*(24/276.5));
+  background: #ede1cb;
+  padding-left: calc(100vw*(16/187.5));
+  line-height: calc(100vh*(24/276.5));
+  color: #000;
+  font-size: calc(100vh*(8/276.5));
+  font-weight: bolder;
+}
+
+.listBar image {
+  float: right;
+  width: calc(100vw*(10/187.5));
+  height: calc(100vw*(10/187.5));
+  margin-top: calc(100vh*(6/276.5));
+}
+
+.listBar text {
+  float: right;
+  font-size: calc(100vh*(7/276.5));
+  line-height: calc(100vh*(24/276.5));
+  margin-right: calc(100vw*(12.5/187.5));
+  color: #485d6b;
+}
+
+.cityLine1 {
+  margin-top: calc(100vh*(4/276.5));
+  color: #000;
+  font-weight: 700;
+  font-size: calc(100vh*(7/276.5));
+  float: left;
+  width: calc(100vw*(159/187.5));
+  box-sizing: border-box;
+}
+
+.cityLine2 {
+  margin-top: calc(100vh*(2/276.5));
+  color: #c5aa7c;
+  font-size: calc(100vh*(6/276.5));
+  float: left;
+  width: calc(100vw*(159/187.5));
+  box-sizing: border-box;
+}
+
+.cityLine2 text:first-child {
+  float: left;
+  color: #9b9b9b;
+}
+
+.cityLine2 text:nth-child(2) {
+  text-decoration: underline;
+  float: left;
+  
+}
+
+/* .cityLine2 text:last-child {
+  float: right;
+  margin-right: calc(100vw*(12/187.5));
+  color: #9b9b9b;
+} */
+
+.cityBox {
+  min-height: calc(100vh*(29/276.5));
+  border-bottom: 1px solid #d8d8d8;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.cityBox image {
+  display: block;
+  float: left;
+  width: calc(100vw*(12.5/187.5));
+  height: calc(100vw*(12.5/187.5));
+  margin-top: calc(100vh*(8/276.5));
+  margin-left: calc(100vw*(8/187.5));
+  margin-right: calc(100vw*(8/187.5));
+}
+
+.selectBox {
+  position: fixed;
+  width: 100vw;
+  height: auto;
+  bottom: -40vh;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.selectBox .selectBar {
+  width: 100vw;
+  height: calc(100vh*(20/276.5));
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  line-height: calc(100vh*(20/276.5));
+  background: #fff;
+}
+
+.selectBox picker-view {
+  height: 30vh;
+  width: 100vw;
+}
+
+.selectBox picker-view picker-view-column {
+  text-align: center;
+  height: 10%;
+  margin: 0;
+  padding: 0;
+}
+
+.cancle {
+  width: 50%;
+  padding-left: calc(100vw*(7/187.5));
+  padding-top: calc(100vh*(5/276.5));
+  font-size: calc(100vh*(7/276.5));
+}
+
+.confirm {
+  width: 50%;
+  padding-right: calc(100vw*(7/187.5));
+  float: right;
+  text-align: right;
+  color: #54bb2a;
+  font-size: calc(100vh*(7/276.5));
+}
+
+.qrContainer {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.64);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  top: 0;
+  box-sizing: border-box;
+}
+
+.qrTitle image {
+  position: absolute;
+  width: calc(100vw*(6/187.5));
+  height: calc(100vw*(6/187.5));
+  top: calc(100vh*(7/276.5));
+  right: calc(100vh*(8/276.5));
+}
+
+.canvasBox {
+  position: relative;
+  width: calc(100vw*(163.5/187.5));
+  height: calc(100vw*(194.5/187.5));
+  background: #fff;
+  top: calc(100vh*(58/276.5));
+  left: calc(100vw*(12/187.5));
+}
+
+.qrTitle {
+  width: 100%;
+  height: calc(100vw*(20/187.5));
+  line-height: calc(100vw*(20/187.5));
+  background: #ede1cb;
+  font-size: calc(100vh*(8/276.5));
+  font-weight: bold;
+  box-sizing: border-box;
+  padding-left: calc(100vw*(6/187.5));
+}
+
+
+.qrName {
+  position: relative;
+  float: left;
+  margin-top: calc(100vw*(7/187.5));
+  width: 100%;
+  text-align: center;
+  font-size: calc(100vh*(7/276.5));
+  font-weight: bold;
+}
+
+.qrTel {
+  position: relative;
+  float: left;
+  margin-top: calc(100vw*(2/187.5));
+  width: 100%;
+  text-align: center;
+  color: #c5aa7c;
+  font-size: calc(100vh*(6/276.5));
+}
+.canvasBox>image{
+  position: absolute;
+  float: left;
+  width: calc(100vw*(122.7/187.5));
+  height: calc(100vw*(122.7/187.5));
+  margin-top:  calc(100vw*(31.5/187.5));
+  margin-left: calc(100vw*(20.5/187.5));
+  z-index: 100;
+  display:block;
+}
+picker-view{
+  background: #fff;
+}
+.cover{
+  position: absolute;
+  background: rgba(0,0,0,0.64);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  top:0;
+}

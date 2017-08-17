@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/gold/gold",
+    "pages/location/location",
+    "pages/vip/vip"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "我的周生生",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#D8D8D8",
+    "selectedColor": "#C5AA7C",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/gold/gold",
+        "text": "每日金价",
+        "iconPath": "img/gold_un.png",
+        "selectedIconPath": "img/gold_ch.png"
+      },
+      {
+        "pagePath": "pages/location/location",
+        "text": "门店",
+        "iconPath": "img/location_un.png",
+        "selectedIconPath": "img/location_ch.png"
+      },
+      {
+        "pagePath": "pages/vip/vip",
+        "text": "会员",
+        "iconPath": "img/vip_un.png",
+        "selectedIconPath": "img/vip_ch.png"
+      }
+    ]
+  }
+}

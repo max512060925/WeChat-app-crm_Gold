@@ -1,0 +1,67 @@
+/* location.wxss */
+
+page {
+  background: #f8f8f8;
+}
+
+.title {
+  height: calc(100vh*(24/276.5));
+  width: 100vw;
+  background: #ede1cb;
+  padding-left: calc(100vw*(12/187.5));
+  line-height: calc(100vh*(24/276.5));
+  color: #000;
+  font-size: calc(100vh*(8/276.5));
+  font-weight: bolder;
+  box-sizing: border-box;
+}
+.title text{
+  color: #485D6B;
+  font-size: calc(100vh*(6/276.5));
+  margin-right: calc(100vw*(12/187.5));
+  float: right;
+  font-weight: 300;
+}
+.goldBox {
+  height: calc(100vh*(53.5/276.5));
+  margin-left: calc(100vw*(12/187.5));
+  border-bottom: 1px solid #d8d8d8;
+  font-size: calc(100vh*(8/276.5));
+}
+
+.goldTitle {
+  color: #000;
+  font-weight: bolder;
+  margin-top: calc(100vh*(5/276.5));
+}
+
+.goldTitle text {
+  color: #9b9b9b;
+}
+
+.line {
+  margin-top: calc(100vh*(8/276.5));
+  font-size: calc(100vh*(7/276.5));
+  color: #9b9b9b;
+  height: calc(100vh*(10/276.5));
+  line-height: calc(100vh*(10/276.5));
+  float:left;
+  width:100%;
+}
+
+.line text {
+  float: right;
+  margin-right: calc(100vw*(12/187.5));
+  color: #c5aa7c;
+  display: inline-block;
+  width: calc(100vw*(22.5/187.5));
+  letter-spacing: calc(100vw*(0.36/187.5));
+  font-weight: 600;
+  text-align:right;
+  font-family:Helvetica;
+  font-size: calc(100vh*(9/276.5));
+}
+
+.goldBox:last-child {
+  border-bottom: none;
+}

@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<view id="container" style="overflow:{{overflow}};">
+  <view class="listBar">门店列表
+    <text bindtap="tap">{{cont}}</text>
+    <image src="../../img/location.png" bindtap="tap"></image>
+  </view>
+  <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.sid}}" data-name="{{item.sname}}" data-tel="{{item.phone}}">
+    <image src="../../img/qr.png"></image>
+    <view class="cityLine1"><text class="cityName">{{item.sname}}</text></view>
+    <view class="cityLine2"><text>{{item.address}}</text></view>
+  </view>
+  <view class="selectBox" animation="{{animationData}}">
+    <view class="selectBar">
+      <text class="cancle" bindtap="cancle">取消</text>
+      <text class="confirm" bindtap="confirm">确定</text>
+    </view>
+    <picker-view value="{{value}}" bindchange="bindChange" indicator-style="height: calc(100vh*(100/1039))">
+      <picker-view-column>
+        <view wx:for="{{citys}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{conts}}" style="line-height: 50px">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+<view class="qrContainer" wx:if="{{qrContainer}}" bindtap="closeTap">
+  <view class="canvasBox">
+    <view class="qrTitle">
+     关注分店微信号，即时在线咨询。
+      <image src="../../img/close.png"></image>
+    </view>
+    <text class="qrName">{{qrName}}</text>
+    <text class="qrTel" catchtap="phoneCall" data-phoneCall="{{qrTel}}">电话: <text style="text-decoration: underline;">{{qrTel}}</text></text>
+    <image src="{{shopImg}}" bindload="imgLoad" binderror="imgLoadErr"></image>
+  </view>
+</view>
+<view class="cover" hidden="{{cover}}"></view>
