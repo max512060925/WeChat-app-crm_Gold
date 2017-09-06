@@ -8,15 +8,39 @@ var qqmapsdk1;
 var qqmapsdk2;
 var qqmapsdk3;
 var qqmapsdk4;
+var by = function (name) {
+  return function(o,p) {
+    var a, b;
+    if(typeof o === "object" && typeof p === "object" && o && p) {
+      a= o[name];
+      b= p[name];
+      console.log(a,b)
+      if(a === b) {
+        return 0;
+      }
+      if(typeof a === typeof b) {
+        return a < b ? -1 : 1;
+      }
+      return typeof a < typeof b ? -1 : 1;
+    }else {
+      throw ("error");
+    }
+  }
+}
 function strToM(s){
   let str
   if (s>=1000){
     str = Math.round((s / 1000)*100)/100+ 'km';
-  }else{
+  }else if(s<1000){
     str = Math.round(s*100)/100+ 'm';
+  }else{
+    str='>10km';
   }
   return str
 }
+var newCityObj = {};
+var s1;
+var s2;
 Page({
   data: {
     animationData: {},
@@ -27,6 +51,7 @@ Page({
     cont: '',
     picker: true,
     val: '',
+    locData:{},
     location: {
       latitude: '',
       longitude: ''
@@ -43,23 +68,7 @@ Page({
     wx.showLoading({ title: '加载中' });
     let cityObj='';
     var that=this;
-    wx.request({
-      url: 'https://cssminabackend.oookini.com/v1/district',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        let citysArr = [''];
-        cityObj = res.data.data
-        for (let k in res.data.data) {
-          citysArr.push(k)
-        };
-        that.setData({
-          citys: citysArr,
-          cityO: cityObj
-        });
-      }
-    })
+    console.log(this,)
     qqmapsdk = new QQMapWX({
       key: 'XSOBZ-NDQW4-ZSJUS-DMAHL-5SYTS-XZBRH'
     });
@@ -75,126 +84,114 @@ Page({
     qqmapsdk4 = new QQMapWX({
       key: 'JQYBZ-4S4K3-MSG36-3TKLE-7UAEE-RJFOS'
     });
-    var that = this;
-    let locationArr = {};
-    wx.getLocation({
-      type: 'wgs84',
+    
+    wx.request({
+      url: 'https://cssminabackend.oookini.com/v1/district',
+      header: {
+        'content-type': 'application/json'
+      },
       success: function (res) {
+        let citysArr = [''];
+        cityObj = res.data.data
+        for (let k in res.data.data) {
+          citysArr.push(k)
+        };
         that.setData({
-          location: {
-            latitude: res.latitude,
-            longitude: res.longitude
-          }
+          citys: citysArr,
+          cityO: cityObj
         });
-        qqmapsdk.reverseGeocoder({
-          location: that.data.location,
-          success: function (r) {
-            let id=''
-            for (let k in cityObj) {
-              for (let j in cityObj[k]){
-                if (cityObj[k][j] === r.result.address_component.city) {
-                  id=j
-                }
+        wx.getLocation({
+          type: 'wgs84',
+          success: function (res) {
+            that.setData({
+              location: {
+                latitude: res.latitude,
+                longitude: res.longitude
               }
-            };
-            
+            });
+            qqmapsdk.reverseGeocoder({
+              location: that.data.location,
+              success: function (r) {
+                var id = '';
+                for (let k in cityObj) {
+                  for (let j in cityObj[k]) {
+                    if (cityObj[k][j] === r.result.address_component.city) {
+                      id = j;
+                    }
+                  }
+                };
+                console.log(id);
+                wx.request({
+                  url: 'https://cssminabackend.oookini.com/v1/' + id + '/stores',
+                  header: {
+                    'content-type': 'application/json'
+                  },
+                  success: function (resp) {
+                    console.log(resp)
+                    newCityObj = {};
+                    newCityObj = resp.data.data;
+                    let j=-1;
+                    s1=setInterval(function(){
+                      j++;
+                      if (j >resp.data.data.length) {
+                        clearInterval(s1)
+                      }else{
+                        qqmapsdk.calculateDistance({
+                          to: resp.data.data[j].latitude + ',' + resp.data.data[j].longitude,
+                          success: function (p) {
+                            console.log(p,j)
+                            if (p.result.elements[0].distance) {
+                              newCityObj[j]['locM'] = strToM(p.result.elements[0].distance)
+                            } else {
+                              newCityObj[j]['locM'] = '>10km';
+                            }
+                            // newCityObj.sort(by('locM'))
+                            that.setData({
+                              cont: r.result.address_component.city,
+                              cityShow: newCityObj
+                            });
+                            wx.hideLoading();
+                          },
+                          fail:function(){
+                            newCityObj[j]['locM'] = '>10km';
+                            // newCityObj.sort(by('locM'))
+                            that.setData({
+                              cont: r.result.address_component.city,
+                              cityShow: newCityObj
+                            });
+                          }
+                        })
+                      }
+                    },350)
+                  }
+                })
+
+                
+              }
+            });
+          },
+          fail: function () {
             wx.request({
-              url: 'https://cssminabackend.oookini.com/v1/' + id+'/stores',
+              url: 'https://cssminabackend.oookini.com/v1/35/stores',
               header: {
                 'content-type': 'application/json'
               },
-              success: function (resp) {             
-                for (let i = 0; i < resp.data.data.length;i++){
-                  if(i%5==1){
-                    qqmapsdk.calculateDistance({
-                      to: resp.data.data[i].latitude + ',' + resp.data.data[i].longitude,
-                      success: function (p) {
-                        let k = i + 1
-                        locationArr[k] = p.result.elements[0].distance, p
-                      }
-                    })
-                  } else if (i % 5 == 2){
-                    qqmapsdk1.calculateDistance({
-                      to: resp.data.data[i].latitude + ',' + resp.data.data[i].longitude,
-                      success: function (p) {
-                        let k = i + 1
-                        locationArr[k] = p.result.elements[0].distance, p
-                      }
-                    })
-                  } else if (i % 5 == 3) {
-                    qqmapsdk2.calculateDistance({
-                      to: resp.data.data[i].latitude + ',' + resp.data.data[i].longitude + ';',
-                      success: function (p) {
-                        let k = i + 1
-                        locationArr[k] = p.result.elements[0].distance, p
-                      }
-                    })
-                  } else if (i % 5 == 4) {
-                    qqmapsdk3.calculateDistance({
-                      to: resp.data.data[i].latitude + ',' + resp.data.data[i].longitude + ';',
-                      success: function (p) {
-                        let k = i + 1
-                        locationArr[k] = p.result.elements[0].distance, p
-                      }
-                    })
-                  } else if (i % 5 == 0) {
-                    qqmapsdk4.calculateDistance({
-                      to: resp.data.data[i].latitude + ',' + resp.data.data[i].longitude + ';',
-                      success: function (p) {
-                        let k = i + 1
-                        locationArr[k] = p.result.elements[0].distance, p
-                      }
-                    })
-                  }
-                  console.log(locationArr)
-                }
-                console.log(resp.data.data, locationArr)
-                let newCityObj = resp.data.data;
-                let O={};
-                console.log(locationArr['2'])
-
-                for (let m in locationArr){
-                  console.log(1)
-                  // for (let h in newCityObj){
-                  //   console.log(k,h)
-                  //   // if(k==h){
-                  //   //   newCityObj[h]['range'] = locationArr[k]
-                  //   // }
-                  // }
-                }
-                console.log(newCityObj)
-                function sortNumber(a, b) {
-                  return a['range'] - b['range']
-                }
-                newCityObj=newCityObj.sort(sortNumber)
-                console.log(newCityObj)
+              success: function (resp) {
+                console.log(resp.data)
                 that.setData({
-                  cont: r.result.address_component.city,
-                  cityShow: newCityObj
+                  cont: '上海市',
+                  cityShow: resp.data.data
                 });
               }
             })
             wx.hideLoading();
           }
         });
-      },
-      fail: function () {
-        wx.request({
-          url: 'https://cssminabackend.oookini.com/v1/35/stores',
-          header: {
-            'content-type': 'application/json'
-          },
-          success: function (resp) {
-            console.log(resp.data)
-            that.setData({
-              cont: '上海市',
-              cityShow: resp.data.data
-            });
-          }
-        })
-        wx.hideLoading();
       }
-    });
+    })
+    
+    
+    
     
 
 
@@ -215,12 +212,14 @@ Page({
       console.log(contsArr)
     }
     this.setData({
-      city: this.data.cityO[this.data.citys[val[0]]],
+      city: this.data.cityO[this.data.citys[val[1]]],
       conts: contsArr
     });
   },
   tap: function (e) {
     wx.showLoading({ title: '加载中' });
+    clearInterval(s1);
+    clearInterval(s2);
     var animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'ease',
@@ -255,11 +254,11 @@ Page({
     this.animation = animation;
     animation.bottom('-40vh').step();
     let c = this.data.conts[this.data.val[1]];
-    let id='';
+    var id2='';
     console.log(c, this.data.cityO[this.data.citys[this.data.val[0]]])
     for (let k in this.data.cityO[this.data.citys[this.data.val[0]]]){
       if (c === this.data.cityO[this.data.citys[this.data.val[0]]][k]){
-        id=k
+        id2=k
       }
     }
     this.setData({
@@ -270,25 +269,45 @@ Page({
     })
     var that=this;
     wx.request({
-      url: 'https://cssminabackend.oookini.com/v1/' + id + '/stores',
+      url: 'https://cssminabackend.oookini.com/v1/' + id2 + '/stores',
       header: {
         'content-type': 'application/json'
       },
       success: function (resp) {
-        that.setData({
-          cityShow: resp.data.data
-        });
-        let locationArr = [];
-        let str = ''
-        for (let i = 0; i < resp.data.data.length; i++) {
-          console.log(i);
-          qqmapsdk.calculateDistance({
-            to: that.data.cityShow[i].latitude + ',' + that.data.cityShow[i].longitude + ';',
-            success: function (p) {
-              console.log(p)
-            }
-          })
-        }
+        console.log(resp)
+        newCityObj = {};
+        newCityObj = resp.data.data;
+        let j = -1;
+        s2 = setInterval(function () {
+          j++;
+          if (j > resp.data.data.length) {
+            clearInterval(s2)
+          } else {
+            qqmapsdk.calculateDistance({
+              to: resp.data.data[j].latitude + ',' + resp.data.data[j].longitude,
+              success: function (p) {
+                console.log(p, j)
+                if (p.result.elements[0].distance) {
+                  newCityObj[j]['locM'] = strToM(p.result.elements[0].distance)
+                } else {
+                  newCityObj[j]['locM'] = '>10km';
+                }
+                // newCityObj.sort(by('locM'))
+                that.setData({
+                  cityShow: newCityObj
+                });
+                wx.hideLoading();
+              },
+              fail: function () {
+                newCityObj[j]['locM'] = '>10km';
+                // newCityObj.sort(by('locM'))
+                that.setData({
+                  cityShow: newCityObj
+                });
+              }
+            })
+          }
+        }, 350)
       }
     })
   },
