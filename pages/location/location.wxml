@@ -4,9 +4,9 @@
     <text bindtap="tap">{{cont}}</text>
     <image src="../../img/location.png" bindtap="tap"></image>
   </view>
-  <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.sid}}" data-name="{{item.sname}}" data-tel="{{item.phone}}">
+  <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.qrcode}}" data-name="{{item.name}}" data-tel="{{item.phone}}">
     <image src="../../img/qr.png"></image>
-    <view class="cityLine1"><text class="cityName">{{item.sname}}</text></view>
+    <view class="cityLine1"><text class="cityName">{{item.name}}</text></view>
     <view class="cityLine2"><text>{{item.address}}</text></view>
   </view>
   <view class="selectBox" animation="{{animationData}}">
