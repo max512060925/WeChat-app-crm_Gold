@@ -46,7 +46,15 @@
   width: calc(100vw*(159/187.5));
   box-sizing: border-box;
 }
-.cityLine1 text:last-child {
+.cityLine1 text:first-child{
+  width:50%;
+display:inline-block;
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;
+
+}
+.cityLine1 .locM {
   float: right;
   margin-right: calc(100vw*(10/187.5));
   color: #9b9b9b;
@@ -54,7 +62,7 @@
   font-weight: normal;
 }
 
-.cityLine2 text:first-child {
+.cityLine2  {
   float: left;
   color: #9b9b9b;
 }

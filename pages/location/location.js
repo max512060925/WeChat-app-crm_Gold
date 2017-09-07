@@ -141,11 +141,16 @@ Page({
                 'content-type': 'application/json'
               },
               success: function (resp) {
-                console.log(resp.data)
+                var locM = [];
+                for (let i = 0; i < resp.data.data.length; i++) {
+                  locM.push(strToM(resp.data.data[i].distance))
+                }
                 that.setData({
                   cont: '上海市',
-                  cityShow: resp.data.data
+                  cityShow: resp.data.data,
+                  locM: locM
                 });
+                wx.hideLoading();
               }
             })
             wx.hideLoading();
