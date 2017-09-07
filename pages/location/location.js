@@ -4,10 +4,6 @@ const app = getApp();
 const QQMapWX = require('../../libs/qqmap-wx-jssdk.min.js');
 const QR = require('../../libs/qrcode.js');
 var qqmapsdk;
-var qqmapsdk1;
-var qqmapsdk2;
-var qqmapsdk3;
-var qqmapsdk4;
 var by = function (name) {
   return function(o,p) {
     var a, b;
@@ -49,6 +45,7 @@ Page({
     city: [''],
     cityO:'',
     cont: '',
+    locM:[],
     picker: true,
     val: '',
     locData:{},
@@ -71,20 +68,7 @@ Page({
     console.log(this,)
     qqmapsdk = new QQMapWX({
       key: 'XSOBZ-NDQW4-ZSJUS-DMAHL-5SYTS-XZBRH'
-    });
-    qqmapsdk1 = new QQMapWX({
-      key: 'V6QBZ-2EXW4-REOUZ-DYGQQ-K2R7T-NHF6C'
-    });
-    qqmapsdk2 = new QQMapWX({
-      key: '5MOBZ-QV7WF-GWWJX-NIN4Y-GZQIO-N7FCF'
-    });
-    qqmapsdk3 = new QQMapWX({
-      key: 'EEYBZ-QI3K4-OUGUX-X5W7Y-ZS7H7-DBFJ4'
-    });
-    qqmapsdk4 = new QQMapWX({
-      key: 'JQYBZ-4S4K3-MSG36-3TKLE-7UAEE-RJFOS'
-    });
-    
+    });    
     wx.request({
       url: 'https://cssminabackend.oookini.com/v1/district',
       header: {
@@ -126,43 +110,23 @@ Page({
                   header: {
                     'content-type': 'application/json'
                   },
+                  data:{
+                    latitude: that.data.location.latitude,
+                    longitude: that.data.location.longitude
+                  },
                   success: function (resp) {
                     console.log(resp)
-                    newCityObj = {};
-                    newCityObj = resp.data.data;
-                    let j=-1;
-                    s1=setInterval(function(){
-                      j++;
-                      if (j >resp.data.data.length) {
-                        clearInterval(s1)
-                      }else{
-                        qqmapsdk.calculateDistance({
-                          to: resp.data.data[j].latitude + ',' + resp.data.data[j].longitude,
-                          success: function (p) {
-                            console.log(p,j)
-                            if (p.result.elements[0].distance) {
-                              newCityObj[j]['locM'] = strToM(p.result.elements[0].distance)
-                            } else {
-                              newCityObj[j]['locM'] = '>10km';
-                            }
-                            // newCityObj.sort(by('locM'))
-                            that.setData({
-                              cont: r.result.address_component.city,
-                              cityShow: newCityObj
-                            });
-                            wx.hideLoading();
-                          },
-                          fail:function(){
-                            newCityObj[j]['locM'] = '>10km';
-                            // newCityObj.sort(by('locM'))
-                            that.setData({
-                              cont: r.result.address_component.city,
-                              cityShow: newCityObj
-                            });
-                          }
-                        })
-                      }
-                    },350)
+                    var locM=[];
+                    for (let i = 0; i < resp.data.data.length;i++){
+                      console.log(resp.data.data[i].distance)
+                      locM.push(strToM(resp.data.data[i].distance))
+                    }
+                    that.setData({
+                      cont: r.result.address_component.city,
+                      cityShow: resp.data.data,
+                      locM:locM
+                    });
+                    wx.hideLoading();
                   }
                 })
 
@@ -273,41 +237,20 @@ Page({
       header: {
         'content-type': 'application/json'
       },
+      data: {
+        latitude: that.data.location.latitude,
+        longitude: that.data.location.longitude
+      },
       success: function (resp) {
-        console.log(resp)
-        newCityObj = {};
-        newCityObj = resp.data.data;
-        let j = -1;
-        s2 = setInterval(function () {
-          j++;
-          if (j > resp.data.data.length) {
-            clearInterval(s2)
-          } else {
-            qqmapsdk.calculateDistance({
-              to: resp.data.data[j].latitude + ',' + resp.data.data[j].longitude,
-              success: function (p) {
-                console.log(p, j)
-                if (p.result.elements[0].distance) {
-                  newCityObj[j]['locM'] = strToM(p.result.elements[0].distance)
-                } else {
-                  newCityObj[j]['locM'] = '>10km';
-                }
-                // newCityObj.sort(by('locM'))
-                that.setData({
-                  cityShow: newCityObj
-                });
-                wx.hideLoading();
-              },
-              fail: function () {
-                newCityObj[j]['locM'] = '>10km';
-                // newCityObj.sort(by('locM'))
-                that.setData({
-                  cityShow: newCityObj
-                });
-              }
-            })
-          }
-        }, 350)
+        var locM = [];
+        for (let i = 0; i < resp.data.data.length; i++) {
+          console.log(resp.data.data[i].distance)
+          locM.push(strToM(resp.data.data[i].distance))
+        }
+        that.setData({
+          cityShow: resp.data.data,
+          locM: locM
+        });
       }
     })
   },

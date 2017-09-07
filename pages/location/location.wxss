@@ -46,6 +46,12 @@
   width: calc(100vw*(159/187.5));
   box-sizing: border-box;
 }
+.cityLine1 text:last-child {
+  float: right;
+  margin-right: calc(100vw*(10/187.5));
+  color: #9b9b9b;
+  font-size: calc(100vh*(6/276.5));
+}
 
 .cityLine2 text:first-child {
   float: left;
