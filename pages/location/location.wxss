@@ -51,6 +51,7 @@
   margin-right: calc(100vw*(10/187.5));
   color: #9b9b9b;
   font-size: calc(100vh*(6/276.5));
+  font-weight: normal;
 }
 
 .cityLine2 text:first-child {
