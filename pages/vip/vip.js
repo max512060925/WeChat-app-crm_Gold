@@ -1,7 +1,7 @@
 // vip.js
-const QR = require('../../libs/qrcode.js');
-var s;
-function nimaTW(a, b) {
+import QR from '../../libs/qrcode.js';
+let s;
+let nimaTW = (a, b)=> {
   if (a == '+886') {
     if (b.length == 9) {
       return true;
@@ -18,20 +18,20 @@ function nimaTW(a, b) {
     return true;
   }
 };
-function money(m) {
+let money = (m)=> {
   let mon = m.toString().split('').reverse().join('').replace(/(\d{3}(?=\d)(?!\d+\.|$))/g, '$1,').split('').reverse().join('');
   return mon;
 };
-function strDateToStr(str) {
-  var tempStrs = str.split(' '),
+let strDateToStr = (str)=> {
+  let tempStrs = str.split(' '),
     dateStrs = tempStrs[0].split('-'),
     year = parseInt(dateStrs[0]),
     month = parseInt(dateStrs[1]),
     day = parseInt(dateStrs[2]),
-    str = year + '年' + month + '月' + day + '日';
-  return str;
+    reStr = year + '年' + month + '月' + day + '日';
+  return reStr;
 };
-function round(val, that) {
+let round =(val, that)=> {
   let animation = wx.createAnimation({
     timingFunction: 'linear'
   });
@@ -143,7 +143,6 @@ Page({
           'cookie': wx.getStorageSync('cookie')
         },
         success: function (r) {
-          console.log(r)
           that.setData({
             name: r.data.familyName + (/^[a-zA-Z]/.test(r.data.firstName) ? ' ' + r.data.firstName : r.data.firstName),
             vipNum: r.data.id,
@@ -161,7 +160,6 @@ Page({
             },
             success: function (d) {
               wx.hideLoading();
-              console.log(d)
               if (typeof d.data[0].usableStarDollarAmount == "undefined") {
                   that.setData({
                     money: '0'
@@ -181,7 +179,6 @@ Page({
                 })
               }
               else if (r.data.memberClass == 'AA') {
-
                 wx.showLoading({ title: '加载中' });
                 wx.request({
                   url: 'https://wechat.chowsangsang.com/api/customers/nextClassRemainAmounts', //仅为示例，并非真实的接口地址
@@ -267,7 +264,6 @@ Page({
 
   },
   bindPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value);
     this.setData({
       telAdd: this.data.telArr[e.detail.value],
       index: e.detail.value
@@ -322,7 +318,7 @@ Page({
       } else {
         wx.showLoading({ title: '加载中' });
         wx.request({
-          url: 'https://wechat.chowsangsang.com/api/v2/login', //仅为示例，并非真实的接口地址  
+          url: 'https://wechat.chowsangsang.com/api/v2/login', //仅为示例，并非真实的接口地址
           method: 'post',
           data: {
             username: username, password: this.data.passVal
@@ -457,7 +453,7 @@ Page({
           username = this.data.telAdd.replace('+', '') + this.data.phoneVal;
         };
         wx.request({
-          url: 'https://wechat.chowsangsang.com/api/v2/login', //仅为示例，并非真实的接口地址  
+          url: 'https://wechat.chowsangsang.com/api/v2/login', //仅为示例，并非真实的接口地址
           method: 'post',
           data: {
             username: username, password: this.data.passVal
@@ -483,7 +479,6 @@ Page({
                   'cookie': cookie
                 },
                 success: function (r) {
-                  console.log(r)
                   that.setData({
                     name: r.data.familyName + (/^[a-zA-Z]/.test(r.data.firstName) ? ' ' + r.data.firstName : r.data.firstName),
                     vipNum: r.data.id,
@@ -501,7 +496,6 @@ Page({
                     },
                     success: function (d) {
                       wx.hideLoading();
-                      console.log(d);
                       if (typeof d.data[0].usableStarDollarAmount == "undefined") {
                         that.setData({
                           money: '0'

@@ -1,14 +1,14 @@
 // location.js
-function strDateToStr_Gold(str) {
-  var tempStrs = str.split(' '),
+let strDateToStr_Gold = (str)=> {
+  let tempStrs = str.split(' '),
     dateStrs = tempStrs[0].split('/'),
     year = parseInt(dateStrs[2]),
     month = parseInt(dateStrs[1]),
     day = parseInt(dateStrs[0]),
-    str = year + '年' + month + '月' + day + '日';
-  return str;
+    reStr = year + '年' + month + '月' + day + '日';
+  return reStr;
 };
-function money(m) {
+let money = (m) => {
   let mon = m.toString().split('').reverse().join('').replace(/(\d{3}(?=\d)(?!\d+\.|$))/g, '$1,').split('').reverse().join('');
   return '¥'+mon;
 };
@@ -26,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
+    let that = this;
     wx.showLoading({ title: '加载中' });
     wx.request({
       url: 'https://wechat.chowsangsang.com/api/gold-prices',
@@ -35,34 +35,33 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        var goldObj={
+        let goldObj={
           1:[],
           2:[],
           3:[],
           4:[]
         }
-        console.log(res.data.goldRates);
-        for (var i = 0; i < res.data.goldRates.length; i++){
-          if (res.data.goldRates[i].type =='G_JW_SELL'){
-            goldObj[1].push(res.data.goldRates[i].ptRate)
+        let dataArr=res.data.goldRates;
+        dataArr.forEach(function(v,i){
+          if(v.type === 'G_JW_SELL'){
+            goldObj[1].push(v.ptRate)
           }
-          if (res.data.goldRates[i].type == 'G_JW_EXCH') {
-            goldObj[1].push(res.data.goldRates[i].ptRate)
+          if(v.type === 'G_JW_EXCH'){
+            goldObj[1].push(v.ptRate)
           }
-          if (res.data.goldRates[i].type == 'PT950_JW_SELL') {
-            goldObj[2].push(res.data.goldRates[i].ptRate)
+          if(v.type === 'PT950_JW_SELL'){
+            goldObj[2].push(v.ptRate)
           }
-          if (res.data.goldRates[i].type == 'PT950_JW_EXCH') {
-            goldObj[2].push(res.data.goldRates[i].ptRate)
+          if(v.type === 'PT950_JW_EXCH'){
+            goldObj[2].push(v.ptRate)
           }
-          if (res.data.goldRates[i].type == 'G_BAR_SELL') {
-            goldObj[3].push(res.data.goldRates[i].ptRate)
+          if(v.type === 'G_BAR_SELL'){
+            goldObj[3].push(v.ptRate)
           }
-          if (res.data.goldRates[i].type == '006') {
-            goldObj[4].push(res.data.goldRates[i].ptRate)
+          if(v.type === '006'){
+            goldObj[4].push(v.ptRate)
           }
-          
-        }
+        })
         that.setData({
           gold: [{
             "type": "足金饰品", "sell": money(goldObj[1][0]), "exch": money(goldObj[1][1])
