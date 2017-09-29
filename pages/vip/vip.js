@@ -205,7 +205,7 @@ Page({
               else if (r.data.memberClass == 'FS') {
                 round(0, that);
                 that.setData({
-                  lv: '普通会员',
+                  lv: '基本会员',
                   c_t_1: '只需消费',
                   c_t_2: '1次',
                   c_t_3: '下一等级:高级会员'
@@ -405,7 +405,7 @@ Page({
                       else if (r.data.memberClass == 'FS') {
                         round(0, that);
                         that.setData({
-                          lv: '普通会员',
+                          lv: '基本会员',
                           c_t_1: '只需消费',
                           c_t_2: '1次',
                           c_t_3: '下一等级:高级会员'
@@ -541,7 +541,7 @@ Page({
                       else if (r.data.memberClass == 'FS') {
                         round(0, that);
                         that.setData({
-                          lv: '普通会员',
+                          lv: '基本会员',
                           c_t_1: '只需消费',
                           c_t_2: '1次',
                           c_t_3: '下一等级:高级会员'
