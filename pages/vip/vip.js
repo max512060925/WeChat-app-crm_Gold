@@ -160,13 +160,13 @@ Page({
             },
             success: function (d) {
               wx.hideLoading();
-              if (typeof d.data[0].usableStarDollarAmount == "undefined") {
+              if (typeof d.data.usableStarDollar == "undefined") {
                   that.setData({
                     money: '0'
                   })
                 } else {
                   that.setData({
-                    money: money(d.data[0].usableStarDollarAmount)
+                    money: money(d.data.usableStarDollar)
                   })
                 }
               if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
@@ -363,13 +363,13 @@ Page({
                     success: function (d) {
                       wx.hideLoading();
                       console.log(d)
-                      if (typeof d.data[0].usableStarDollarAmount == "undefined") {
+                      if (typeof d.data.usableStarDollar == "undefined") {
                         that.setData({
                           money: '0'
                         })
                       } else {
                         that.setData({
-                          money: money(d.data[0].usableStarDollarAmount)
+                          money: money(d.data.usableStarDollar)
                         })
                       }
                       if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
@@ -496,13 +496,13 @@ Page({
                     },
                     success: function (d) {
                       wx.hideLoading();
-                      if (typeof d.data[0].usableStarDollarAmount == "undefined") {
+                      if (typeof d.data.usableStarDollar == "undefined") {
                         that.setData({
                           money: '0'
                         })
                       } else {
                         that.setData({
-                          money: money(d.data[0].usableStarDollarAmount)
+                          money: money(d.data.usableStarDollar)
                         })
                       }
                       if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
