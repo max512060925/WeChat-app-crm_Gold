@@ -4,14 +4,14 @@ const app = getApp();
 import QQMapWX from '../../libs/qqmap-wx-jssdk.min.js';
 import QR from '../../libs/qrcode.js';
 let qqmapsdk;
-function strToM(s){
+let strToM= (s)=> {
   let str
-  if (s>=1000){
-    return str = Math.round((s/1000)*100)/100+ 'km';
-  }else if(s<1000){
-    return str = Math.round(s*100)/100+ 'm';
-  }else{
-    return str='>10km';
+  if (s >= 1000) {
+    return str = Math.round((s / 1000) * 100) / 100 + 'km';
+  } else if (s < 1000) {
+    return str = Math.round(s * 100) / 100 + 'm';
+  } else {
+    return str = '>10km';
   }
 }
 Page({
@@ -20,11 +20,11 @@ Page({
     citys: [],
     conts: [''],
     city: [''],
-    cityO:'',
+    cityO: '',
     cont: '',
     picker: true,
     val: '',
-    locData:{},
+    locData: {},
     location: {
       latitude: '',
       longitude: ''
@@ -35,12 +35,12 @@ Page({
     qrTel: '',
     cover: true,
     shopImg: '',
-    overflow:'scroll'
+    overflow: 'scroll'
   },
   onLoad: function () {
     wx.showLoading({ title: '加载中' });
-    let cityObj='';
-    let that=this;
+    let cityObj = '';
+    let that = this;
     qqmapsdk = new QQMapWX({
       key: 'XSOBZ-NDQW4-ZSJUS-DMAHL-5SYTS-XZBRH'
     });
@@ -74,30 +74,30 @@ Page({
                 for (let k in cityObj) {
                   for (let j in cityObj[k]) {
                     if (cityObj[k][j] === r.result.address_component.city) {
-                       wx.request({
-                         url: 'https://cssminabackend.oookini.com/v1/' + j + '/stores',
-                         header: {
-                           'content-type': 'application/json'
-                         },
-                         data:{
-                           latitude: that.data.location.latitude,
-                           longitude: that.data.location.longitude
-                         },
-                         success: function (resp) {
-                           let resArr=resp.data.data;
-                           console.log(resArr)
-                           resArr.map(function(v,i){
-                             v.distance=strToM(v.distance)
-                           })
-                           console.log(resArr)
-                           that.setData({
-                             cont: r.result.address_component.city,
-                             cityShow: resp.data.data
-                           });
-                           wx.hideLoading();
-                         }
-                       })
-                       return;
+                      wx.request({
+                        url: 'https://cssminabackend.oookini.com/v1/' + j + '/stores',
+                        header: {
+                          'content-type': 'application/json'
+                        },
+                        data: {
+                          latitude: that.data.location.latitude,
+                          longitude: that.data.location.longitude
+                        },
+                        success: function (resp) {
+                          let resArr = resp.data.data;
+                          console.log(resArr)
+                          resArr.map(function (v, i) {
+                            v.distance = strToM(v.distance)
+                          })
+                          console.log(resArr)
+                          that.setData({
+                            cont: r.result.address_component.city,
+                            cityShow: resp.data.data
+                          });
+                          wx.hideLoading();
+                        }
+                      })
+                      return;
                     }
                   }
                 };
@@ -112,9 +112,10 @@ Page({
               },
               success: function (resp) {
                 var locM = [];
-                for (let i = 0; i < resp.data.data.length; i++) {
-                  locM.push(strToM(resp.data.data[i].distance))
-                }
+                console.log(resp)
+                resp.data.data.map(function (v, i) {
+                  v.distance = strToM(v.distance)
+                })
                 that.setData({
                   cont: '上海市',
                   cityShow: resp.data.data,
@@ -185,7 +186,7 @@ Page({
       duration: 1000,
       timingFunction: 'ease',
     })
-    let that=this;
+    let that = this;
     this.animation = animation;
     animation.bottom('-40vh').step();
     this.setData({
@@ -195,21 +196,21 @@ Page({
       overflow: 'scroll'
     })
     let c = this.data.conts[this.data.val[1]];
-    for (let k in this.data.cityO[this.data.citys[this.data.val[0]]]){
-      if (c === this.data.cityO[this.data.citys[this.data.val[0]]][k]){
+    for (let k in this.data.cityO[this.data.citys[this.data.val[0]]]) {
+      if (c === this.data.cityO[this.data.citys[this.data.val[0]]][k]) {
         wx.request({
           url: 'https://cssminabackend.oookini.com/v1/' + k + '/stores',
           header: {
             'content-type': 'application/json'
           },
-          data:{
+          data: {
             latitude: that.data.location.latitude,
             longitude: that.data.location.longitude
           },
           success: function (resp) {
-            let resArr=resp.data.data;
-            resArr.map(function(v,i){
-              v.distance=strToM(v.distance)
+            let resArr = resp.data.data;
+            resArr.map(function (v, i) {
+              v.distance = strToM(v.distance)
             })
             that.setData({
               cityShow: resp.data.data
@@ -257,7 +258,7 @@ Page({
   imgLoad: function (e) {
     wx.hideLoading();
   },
-  imgLoadErr:function(e){
+  imgLoadErr: function (e) {
     // wx.hideLoading();
     this.setData({
       shopImg: '../../img/qrcode.jpg'

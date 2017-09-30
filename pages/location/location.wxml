@@ -6,7 +6,7 @@
   </view>
   <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.qrcode}}" data-name="{{item.name}}" data-tel="{{item.phone}}">
     <image src="../../img/qr.png"></image>
-    <view class="cityLine1"><text class="cityName">{{item.name}}</text><text class="locM" wx:if="{item.distance=='0m'}}">距离我： {{item.distance}}</text></view>
+    <view class="cityLine1"><text class="cityName">{{item.name}}</text><text class="locM" wx:if="{{item.distance!='0m'}}">距离我： {{item.distance}}</text></view>
     <view class="cityLine2"><text>{{item.address}}</text></view>
   </view>
   <view class="selectBox" animation="{{animationData}}">
