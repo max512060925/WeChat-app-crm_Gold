@@ -28,7 +28,12 @@ page {
   border-bottom: 1px solid #d8d8d8;
   font-size: calc(100vh*(8/276.5));
 }
-
+.goldBox2{
+  height: calc(100vh*(68.5/276.5));
+  margin-left: calc(100vw*(12/187.5));
+  border-bottom: 1px solid #d8d8d8;
+  font-size: calc(100vh*(8/276.5));
+}
 .goldTitle {
   color: #000;
   font-weight: bolder;

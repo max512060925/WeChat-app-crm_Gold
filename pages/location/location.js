@@ -16,6 +16,9 @@ let strToM= (s)=> {
 }
 Page({
   data: {
+    language: getApp().globalData.language,
+    chsArr: ['门店列表', '距离我', '確定', '关注分店微信号，即时在线咨询。','电话'],
+    chtArr: ['門店列表', '距離我', '確定', '關註分店微信號，即時在線咨詢。', '電話'],
     animationData: {},
     citys: [],
     conts: [''],
@@ -38,7 +41,7 @@ Page({
     overflow: 'scroll'
   },
   onLoad: function () {
-    wx.showLoading({ title: '加载中' });
+    wx.showLoading({ title: 'loading...' });
     let cityObj = '';
     let that = this;
     qqmapsdk = new QQMapWX({
@@ -130,16 +133,13 @@ Page({
     })
 
 
-
-
-
-
-
   },
   onShow: function () {
-    var that = this;
-    // 调用接口
-
+    let language=getApp().globalData.language
+    this.setData({
+      language: getApp().globalData.language
+    })
+    this.onLoad()
   },
   bindChange: function (e) {
     const val = e.detail.value;
@@ -154,7 +154,7 @@ Page({
     });
   },
   tap: function (e) {
-    wx.showLoading({ title: '加载中' });
+    wx.showLoading({ title: 'loading...' });
     let animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'ease',
@@ -221,32 +221,9 @@ Page({
         return;
       }
     }
-
-
-    // wx.request({
-    //   url: 'https://cssminabackend.oookini.com/v1/' + id2 + '/stores',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   data: {
-    //     latitude: that.data.location.latitude,
-    //     longitude: that.data.location.longitude
-    //   },
-    //   success: function (resp) {
-    //     var locM = [];
-    //     for (let i = 0; i < resp.data.data.length; i++) {
-    //       console.log(resp.data.data[i].distance)
-    //       locM.push(strToM(resp.data.data[i].distance))
-    //     }
-    //     that.setData({
-    //       cityShow: resp.data.data,
-    //       locM: locM
-    //     });
-    //   }
-    // })
   },
   cityShowTap: function (e) {
-    wx.showLoading({ title: '加载中' });
+    wx.showLoading({ title: 'loading...' });
     this.setData({
       qrContainer: true,
       qrName: e.currentTarget.dataset.name,

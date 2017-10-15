@@ -6,7 +6,7 @@
 .listBar {
   height: calc(100vh*(24/276.5));
   background: #ede1cb;
-  padding-left: calc(100vw*(16/187.5));
+  padding-left: calc(100vw*(12/187.5));
   line-height: calc(100vh*(24/276.5));
   color: #000;
   font-size: calc(100vh*(8/276.5));

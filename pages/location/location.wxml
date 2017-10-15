@@ -1,18 +1,18 @@
 <!--index.wxml-->
 <view id="container" style="overflow:{{overflow}};">
-  <view class="listBar">门店列表
+  <view class="listBar">{{language==='chs'?chsArr[0]:chtArr[0]}}
     <text bindtap="tap">{{cont}}</text>
     <image src="../../img/location.png" bindtap="tap"></image>
   </view>
   <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.qrcode}}" data-name="{{item.name}}" data-tel="{{item.phone}}">
     <image src="../../img/qr.png"></image>
-    <view class="cityLine1"><text class="cityName">{{item.name}}</text><text class="locM" wx:if="{{item.distance!='0m'}}">距离我： {{item.distance}}</text></view>
+    <view class="cityLine1"><text class="cityName">{{item.name}}</text><text class="locM" wx:if="{{item.distance!='0m'}}">{{language==='chs'?chsArr[1]:chtArr[1]}}： {{item.distance}}</text></view>
     <view class="cityLine2"><text>{{item.address}}</text></view>
   </view>
   <view class="selectBox" animation="{{animationData}}">
     <view class="selectBar">
       <text class="cancle" bindtap="cancle">取消</text>
-      <text class="confirm" bindtap="confirm">确定</text>
+      <text class="confirm" bindtap="confirm">{{language==='chs'?chsArr[2]:chtArr[2]}}</text>
     </view>
     <picker-view value="{{value}}" bindchange="bindChange" indicator-style="height: calc(100vh*(100/1039))">
       <picker-view-column>
@@ -27,11 +27,11 @@
 <view class="qrContainer" wx:if="{{qrContainer}}" bindtap="closeTap">
   <view class="canvasBox">
     <view class="qrTitle">
-     关注分店微信号，即时在线咨询。
+     {{language==='chs'?chsArr[3]:chtArr[3]}}
       <image src="../../img/close.png"></image>
     </view>
     <text class="qrName">{{qrName}}</text>
-    <text class="qrTel" catchtap="phoneCall" data-phoneCall="{{qrTel}}">电话: <text style="text-decoration: underline;">{{qrTel}}</text></text>
+    <text class="qrTel" catchtap="phoneCall" data-phoneCall="{{qrTel}}">{{language==='chs'?chsArr[4]:chtArr[4]}}: <text style="text-decoration: underline;">{{qrTel}}</text></text>
     <image src="{{shopImg}}" bindload="imgLoad" binderror="imgLoadErr"></image>
   </view>
 </view>

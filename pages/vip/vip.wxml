@@ -1,8 +1,8 @@
 <!--vip.wxml-->
-<view class="login" wx:if="{{login}}">
-  <view class="loginTitle">已注册用户，可在下面登录<text bindtap="changeTap">{{change}}</text></view>
+<view class="{{language==='chs'?'loginChs':'loginCht'}}" wx:if="{{login}}">
+  <view class="loginTitle">{{language==='chs'?chsArr[0]:chtArr[0]}}<text bindtap="changeTap">{{change}}</text></view>
   <view class="mailBox" wx:if="{{mail}}">
-    <input placeholder="点击输入您的邮箱" type="text" bindinput="bindMailInput" />
+    <input placeholder="{{language==='chs'?chsArr[1]:chtArr[1]}}" type="text" bindinput="bindMailInput" />
   </view>
   <view class="phoneBox" wx:if="{{phone}}">
     <picker bindchange="bindPickerChange" value="0" range="{{telArr}}" mode="selector">
@@ -10,22 +10,22 @@
         {{telArr[index]}}
       </view>
     </picker>
-    <input type="number" bindinput="bindPhoneInput" placeholder="点击输入您电话号码" class="phoneInp" />
+    <input type="number" bindinput="bindPhoneInput" placeholder="{{language==='chs'?chsArr[2]:chtArr[2]}}" class="phoneInp" />
   </view>
-  <input maxlength="15" type="password" placeholder="点击输入密码" class="pass" bindinput="bindPassInput" value="{{passVal}}" />
+  <input maxlength="15" type="password" placeholder="{{language==='chs'?chsArr[3]:chtArr[3]}}" class="pass" bindinput="bindPassInput" value="{{passVal}}" />
   <view class="msg">{{msg}}</view>
-  <view class="confirm" bindtap="confirm">立即登录</view>
+  <view class="confirm" bindtap="confirm">{{language==='chs'?chsArr[4]:chtArr[4]}}</view>
 </view>
 <view class="user" wx:if="{{user}}">
   <image src="../../img/banner.png" class="banner"></image>
   <view class="titleBar">
     <image src="{{src}}" bindtap="signOut"></image>
     <view class="titleBox"><text class="name">{{name}}</text><text class="lv">{{lv}}</text></view>
-    <view class="titleLine">会员卡号:  {{vipNum}}</view>
-    <view class="titleLine">会籍到期日:  {{vipDate}}</view>
+    <view class="titleLine">{{language==='chs'?chsArr[5]:chtArr[5]}}:  {{vipNum}}</view>
+    <view class="titleLine">{{language==='chs'?chsArr[6]:chtArr[6]}}:  {{vipDate}}</view>
     <image src="../../img/qr.png" bindtap="qrTap"></image>
   </view>
-  <view class="money">悦享钱: {{money}}</view>
+  <view class="money">{{language==='chs'?chsArr[7]:chtArr[7]}}: {{money}}</view>
   <view class="round">
     <view class="r1" animation="{{animationData}}" style="z-index:{{r1}};"></view>
     <view class="r2" style="z-index:{{r2}};"></view>
@@ -42,8 +42,8 @@
 <view class="qrContainer" wx:if="{{qrContainer}}" bindtap="closeTap">
   <view class="canvasBox">
     <canvas canvas-id="mycanvas"/>
-    <text>此二维码还有{{minutes}}分{{seconds}}秒刷新</text>
+    <text>{{language==='chs'?chsArr[8]:chtArr[8]}}{{minutes}}分{{seconds}}秒刷新</text>
     <image src="../../img/close.png" ></image>
   </view>
-  <view class="text">请向店员出示二维码，立即使用周生生之友会员卡</view>
+  <view class="text">{{language==='chs'?chsArr[9]:chtArr[9]}}</view>
 </view>

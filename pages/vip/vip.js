@@ -75,7 +75,10 @@ Page({
     r2: 0,
     r3: 1,
     r4: 1,
-    change: "邮箱登录",
+    language: getApp().globalData.language,
+    chsArr: ['已注册用户，可在下面登录', '点击输入您的邮箱', '点击输入您电话号码', '点击输入密码', '立即登录', '会员卡号', '会籍到期日', '悦享钱', '此二维码还有','请向店员出示二维码，立即使用周生生之友会员卡'],
+    chtArr: ['已註冊用戶，可在下面登錄', '點擊輸入您的郵箱', '點擊輸入您電話號碼', '點擊輸入密碼', '立即登錄', '會員卡號', '會籍到期日', '悅享錢', '此二維碼還有', '請向店員出示二維碼，立即使用周生生之友會員卡'],
+    change: getApp().globalData.language === 'chs' ? '邮箱登录' : '郵箱登錄',
     telArr: ['+86', '+852', '+853', '+886', '+1', '+7', '+20', '+27', '+30', '+31', '+32', '+33', '+34', '+36', '+39', '+40', '+41', '+43', '+44', '+45', '+46', '+47', '+48', '+49', '+51', '+52', '+53', '+54', '+55', '+56', '+57', '+58', '+60', '+61', '+62', '+63', '+64', '+65', '+66', '+81', '+82', '+84', '+86', '+90', '+91', '+92', '+93', '+94', '+95', '+98', '+212', '+213', '+216', '+218', '+220', '+221', '+223', '+224', '+225', '+226', '+227', '+228', '+229', '+230', '+231', '+232', '+233', '+234', '+235', '+236', '+237', '+239', '+241', '+242', '+243', '+244', '+247', '+248', '+249', '+250', '+251', '+252', '+253', '+254', '+255', '+256', '+257', '+258', '+260', '+261', '+262', '+263', '+264', '+265', '+266', '+267', '+268', '+269', '+331', '+350', '+351', '+352', '+353', '+354', '+355', '+356', '+357', '+358', '+359', '+370', '+371', '+372', '+373', '+374', '+375', '+376', '+377', '+378', '+380', '+381', '+386', '+420', '+421', '+423', '+501', '+502', '+503', '+504', '+505', '+506', '+507', '+509', '+591', '+592', '+593', '+594', '+595', '+596', '+597', '+598', '+599', '+673', '+674', '+675', '+676', '+677', '+678', '+679', '+682', '+684', '+685', '+689', '+850', '+855', '+856', '+880', '+960', '+961', '+962', '+963', '+964', '+965', '+966', '+967', '+968', '+971', '+972', '+973', '+974', '+976', '+977', '+992', '+993', '+994', '+995', '+1242', '+1246', '+1264', '+1268', '+1345', '+1441', '+1664', '+1670', '+1671', '+1758', '+1784', '+1787', '+1809', '+1876', '+1890'],
     index: 0,
     mail: false,
@@ -120,6 +123,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let language = getApp().globalData.language
+    this.setData({
+      language: getApp().globalData.language
+    })
     var that = this;
     wx.getUserInfo({
       success: function (re) {
@@ -134,7 +141,7 @@ Page({
         login: false,
         user: true
       });
-      wx.showLoading({ title: '加载中' });
+      wx.showLoading({ title: 'loading...' });
       wx.request({
         url: 'https://wechat.chowsangsang.com/api/customers', //仅为示例，并非真实的接口地址
         method: 'get',
@@ -172,14 +179,14 @@ Page({
               if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
                 round(10000, that);
                 that.setData({
-                  lv: '尊尚会员',
-                  c_t_1: '我的悦享钱',
+                  lv: that.data.language === 'chs' ? '尊尚会员' : '尊尚會員',
+                  c_t_1: that.data.language === 'chs' ? '我的悦享钱' : '我的悅享錢',
                   c_t_2: that.data.money,
                   c_t_3: ''
                 })
               }
               else if (r.data.memberClass == 'AA') {
-                wx.showLoading({ title: '加载中' });
+                wx.showLoading({ title: 'loading...' });
                 wx.request({
                   url: 'https://wechat.chowsangsang.com/api/customers/nextClassRemainAmounts', //仅为示例，并非真实的接口地址
                   method: 'get',
@@ -191,24 +198,21 @@ Page({
                     wx.hideLoading();
                     round((10000 - dd.data.amount), that);
                     that.setData({
-                      lv: '高级会员',
-                      c_t_1: '只需消费',
+                      lv: that.data.language === 'chs' ? '高级会员' : '高級會員',
+                      c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                       c_t_2: money(dd.data.amount),
-                      c_t_3: '下一等级:尊尚会员'
+                      c_t_3: that.data.language === 'chs' ? '下一等级:尊尚会员' : '下壹等級:尊尚會員',
                     })
                   }
                 })
-
-
-
               }
               else if (r.data.memberClass == 'FS') {
                 round(0, that);
                 that.setData({
-                  lv: '基本会员',
-                  c_t_1: '只需消费',
+                  lv: that.data.language === 'chs' ? '基本会员' : '基本會員',
+                  c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                   c_t_2: '1次',
-                  c_t_3: '下一等级:高级会员'
+                  c_t_3: that.data.language === 'chs' ? '下一等级:高级会员' : '下壹等級:高級會員',
                 })
               }
             }
@@ -218,7 +222,6 @@ Page({
       })
     }
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -271,9 +274,9 @@ Page({
   },
   changeTap: function (e) {
     var that = this;
-    if (this.data.change == '手机号登录') {
+    if ((this.data.language === 'chs' && this.data.change == '手机号登录') || (this.data.language === 'cht' && this.data.change == '手機號登錄')) {
       this.setData({
-        change: '邮箱登录',
+        change: this.data.language === 'chs' ? '邮箱登录' :  '郵箱登錄',
         mail: false,
         phone: true,
         passVal: '',
@@ -283,7 +286,7 @@ Page({
       })
     } else {
       this.setData({
-        change: '手机号登录',
+        change: this.data.language === 'chs' ? '手机号登录' : '手機號登錄',
         mail: true,
         phone: false,
         passVal: '',
@@ -310,13 +313,13 @@ Page({
   },
   confirm: function (e) {
     var that = this;
-    if (this.data.change == "手机号登录") {
+    if (this.data.change === "手机号登录" || this.data.change === "手機號登錄") {
       if (!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.data.mailVal) || !this.data.passVal) {
         this.setData({
-          msg: '请输入正确的邮箱或密码'
+          msg: this.data.language === 'chs' ? '请输入正确的邮箱或密码' : '請輸入正確的郵箱或密碼',
         })
       } else {
-        wx.showLoading({ title: '加载中' });
+        wx.showLoading({ title: 'loading...' });
         wx.request({
           url: 'https://wechat.chowsangsang.com/api/v2/login', //仅为示例，并非真实的接口地址
           method: 'post',
@@ -331,7 +334,7 @@ Page({
             var cookie = res.header['Set-Cookie'];
             if (res.data.serviceResponse) {
 
-              wx.showLoading({ title: '加载中' });
+              wx.showLoading({ title: 'loading...' });
               wx.setStorage({
                 key: 'cookie',
                 data: res.header['Set-Cookie']
@@ -375,14 +378,14 @@ Page({
                       if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
                         round(10000, that);
                         that.setData({
-                          lv: '尊尚会员',
-                          c_t_1: '我的悦享钱',
+                          lv: that.data.language === 'chs' ? '尊尚会员' : '尊尚會員',
+                          c_t_1: that.data.language === 'chs' ? '我的悦享钱' : '我的悅享錢',
                           c_t_2: that.data.money,
                           c_t_3: ''
                         })
                       }
                       else if (r.data.memberClass == 'AA') {
-                        wx.showLoading({ title: '加载中' });
+                        wx.showLoading({ title: 'loading...' });
                         wx.request({
                           url: 'https://wechat.chowsangsang.com/api/customers/nextClassRemainAmounts', //仅为示例，并非真实的接口地址
                           method: 'get',
@@ -394,10 +397,10 @@ Page({
                             wx.hideLoading();
                             round((10000 - dd.data.amount), that);
                             that.setData({
-                              lv: '高级会员',
-                              c_t_1: '只需消费',
+                              lv: that.data.language === 'chs' ? '高级会员' : '高級會員',
+                              c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                               c_t_2: money(dd.data.amount),
-                              c_t_3: '下一等级:尊尚会员'
+                              c_t_3: that.data.language === 'chs' ? '下一等级:尊尚会员' : '下壹等級:尊尚會員',
                             })
                           }
                         })
@@ -405,10 +408,10 @@ Page({
                       else if (r.data.memberClass == 'FS') {
                         round(0, that);
                         that.setData({
-                          lv: '基本会员',
-                          c_t_1: '只需消费',
+                          lv: that.data.language === 'chs' ? '基本会员' : '基本會員',
+                          c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                           c_t_2: '1次',
-                          c_t_3: '下一等级:高级会员'
+                          c_t_3: that.data.language === 'chs' ? '下一等级:高级会员' : '下壹等級:高級會員'
                         })
                       }
                     }
@@ -420,12 +423,12 @@ Page({
               switch (res.data.authentication_exceptions[0]) {
                 case 'AccountNotFoundException':
                   that.setData({
-                    msg: '您输入的手机号不存在，请重新输入。'
+                    msg: that.data.language === 'chs' ? '您输入的邮箱不存在，请重新输入。' :'您輸入的郵箱不存在，請重新輸入。'
                   })
                   break;
                 case 'FailedLoginException':
                   that.setData({
-                    msg: '您输入的账号或密码有误，请重新输入。'
+                    msg: that.data.language === 'chs' ? '您输入的邮箱或密码有误，请重新输入。' : '您輸入的郵箱或密碼有誤，請重新輸入。'
                   })
                   break;
                 default:
@@ -442,10 +445,10 @@ Page({
     } else {
       if ((this.data.telAdd == '+86' && !/^1[3|4|5|8|7]\d{9}$/.test(this.data.phoneVal)) || !nimaTW(this.data.telAdd, this.data.phoneVal) || ((this.data.telAdd == '+852' || this.data.telAdd == '+853') && this.data.phoneVal.length !== 8) || !this.data.passVal) {
         this.setData({
-          msg: '请输入正确的手机号或密码'
+          msg: this.data.language === 'chs' ? '请输入正确的手机号或密码' : '請輸入正確的手機號或密碼' 
         })
       } else {
-        wx.showLoading({ title: '加载中' });
+        wx.showLoading({ title: 'loading...' });
         var username;
         if (this.data.telAdd == '+886' && this.data.phoneVal.length == 10) {
           username = this.data.telAdd.replace('+', '') + this.data.phoneVal.substr(1);
@@ -466,7 +469,7 @@ Page({
             var cookie = res.header['Set-Cookie'];
             if (res.data.serviceResponse) {
 
-              wx.showLoading({ title: '加载中' });
+              wx.showLoading({ title: 'loading...' });
               wx.setStorage({
                 key: 'cookie',
                 data: res.header['Set-Cookie']
@@ -508,14 +511,14 @@ Page({
                       if ((r.data.memberClass == 'A8') || (r.data.memberClass == '01') || (r.data.memberClass == 'A1')) {
                         round(10000, that);
                         that.setData({
-                          lv: '尊尚会员',
-                          c_t_1: '我的悦享钱',
+                          lv: that.data.language === 'chs' ? '尊尚会员' : '尊尚會員',
+                          c_t_1: that.data.language === 'chs' ? '我的悦享钱' : '我的悅享錢',
                           c_t_2: that.data.money,
                           c_t_3: ''
                         })
                       }
                       else if (r.data.memberClass == 'AA') {
-                        wx.showLoading({ title: '加载中' });
+                        wx.showLoading({ title: 'loading...' });
                         wx.request({
                           url: 'https://wechat.chowsangsang.com/api/customers/nextClassRemainAmounts', //仅为示例，并非真实的接口地址
                           method: 'get',
@@ -527,10 +530,10 @@ Page({
                             wx.hideLoading();
                             round((10000 - dd.data.amount), that);
                             that.setData({
-                              lv: '高级会员',
-                              c_t_1: '只需消费',
+                              lv: that.data.language === 'chs' ? '高级会员' : '高級會員',
+                              c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                               c_t_2: money(dd.data.amount),
-                              c_t_3: '下一等级:尊尚会员'
+                              c_t_3: that.data.language === 'chs' ? '下一等级:尊尚会员' : '下壹等級:尊尚會員',
                             })
                           }
                         })
@@ -541,10 +544,10 @@ Page({
                       else if (r.data.memberClass == 'FS') {
                         round(0, that);
                         that.setData({
-                          lv: '基本会员',
-                          c_t_1: '只需消费',
+                          lv: that.data.language === 'chs' ? '基本会员' : '基本會員',
+                          c_t_1: that.data.language === 'chs' ? '只需消费' : '只需消費',
                           c_t_2: '1次',
-                          c_t_3: '下一等级:高级会员'
+                          c_t_3: that.data.language === 'chs' ? '下一等级:高级会员' : '下壹等級:高級會員',
                         })
                       }
                     }
@@ -556,12 +559,12 @@ Page({
               switch (res.data.authentication_exceptions[0]) {
                 case 'AccountNotFoundException':
                   that.setData({
-                    msg: '您输入的手机号不存在，请重新输入。'
+                    msg: that.data.language === 'chs' ? '您输入的手机号不存在，请重新输入。' : '您輸入的手機號不存在，請重新輸入。'
                   })
                   break;
                 case 'FailedLoginException':
                   that.setData({
-                    msg: '您输入的账号或密码有误，请重新输入。'
+                    msg: that.data.language === 'chs' ? '您输入的手机号或密码有误，请重新输入。' :'您輸入的手機號或密碼有誤，請重新輸入。'
                   })
                   break;
                 default:

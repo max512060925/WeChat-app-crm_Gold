@@ -1,7 +1,8 @@
 <!--location.wxml-->
-<view class="title">中国内地每日金价<text>{{date}}</text></view>
-<view wx:for="{{gold}}" class="goldBox">
-  <view class="goldTitle">{{item.type}}<text> (每克)</text></view>
-  <view class="line">卖出:<text>{{item.sell}}</text></view>
-  <view class="line">换金价:<text>{{item.exch}}</text></view>
+<view class="title"><button type="default" size="mini" plain="false"  bindtap="changeLanguage" class="languageBtn">{{language==='chs'?'繁体':'简体'}}</button>{{language==='chs'?chsArr[0]:chtArr[0]}}<text>{{date}}</text></view>
+<view wx:for="{{gold}}" class="{{language==='chs'?'goldBox':'goldBox2'}}">
+  <view class="goldTitle">{{item.type}}<text> ({{language==='chs'?chsArr[1]:chtArr[1]}})</text></view>
+  <view class="line">{{language==='chs'?chsArr[2]:chtArr[2]}}:<text>{{item.sell}}</text></view>
+  <view class="line" hidden="{{language==='chs'}}">{{chtArr[4]}}:<text>{{item.buy}}</text></view>
+  <view class="line">{{language==='chs'?chsArr[3]:chtArr[3]}}:<text>{{item.exch}}</text></view>
 </view>
