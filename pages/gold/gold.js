@@ -22,9 +22,33 @@ Page({
     gold: '',
     language: getApp().globalData.language,
     chsArr: ['中国内地每日金价', '每克', '卖出', '换金价'],
-    chtArr: ['香港每日金價', '每兩', '賣出', '換貨', '買入']
+    chtArr: ['香港每日金價', '每兩', '賣出', '換貨', '買入'],
+    tabBarChs: [{
+      mod: 'gold',
+      name: '每日金价'
+     },
+     {
+      mod: 'location',
+      name: '门店'
+    },
+    {
+      mod: 'vip',
+      name:  '会员'
+    }],
+    tabBarCht: [{
+      mod: 'gold',
+      name: '每日金價'
+    },
+    {
+      mod: 'location',
+      name: '門店'
+    },
+    {
+      mod: 'vip',
+      name: '會員'
+    }],
+    current: 0
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -116,18 +140,18 @@ Page({
             }
           })
           that.setData({
-            gold : [{
-            "type": "足金飾品", "sell": money(goldObj[1][0]), "buy": money(goldObj[1][1]), "exch": money(goldObj[1][2])
-          },
-          {
-            "type": "足金金條", "sell": money(goldObj[2][0]), "buy": money(goldObj[2][1]), "exch": "-"
-          },
-          {
-            "type": "鉑金飾品", "sell": money(goldObj[3][0]), "buy": money(goldObj[3][1]), "exch": "-"
-          },
-          {
-            "type": "足鉑金飾品", "sell": money(goldObj[4][0]), "buy": money(goldObj[4][1]), "exch": "-"
-          }],
+            gold: [{
+              "type": "足金飾品", "sell": money(goldObj[1][0]), "buy": money(goldObj[1][1]), "exch": money(goldObj[1][2])
+            },
+            {
+              "type": "足金金條", "sell": money(goldObj[2][0]), "buy": money(goldObj[2][1]), "exch": "-"
+            },
+            {
+              "type": "鉑金飾品", "sell": money(goldObj[3][0]), "buy": money(goldObj[3][1]), "exch": "-"
+            },
+            {
+              "type": "足鉑金飾品", "sell": money(goldObj[4][0]), "buy": money(goldObj[4][1]), "exch": "-"
+            }],
             date: strDateToStr_Gold(res.data.goldRates[0].entryDate)
           })
         }

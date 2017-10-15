@@ -1,4 +1,6 @@
 <!--vip.wxml-->
+<import src="../../template/tabBar.wxml" />  
+<template is="tabBar" data="{{tabBar: language==='chs'?tabBarChs:tabBarCht,current:current}}"/>  
 <view class="{{language==='chs'?'loginChs':'loginCht'}}" wx:if="{{login}}">
   <view class="loginTitle">{{language==='chs'?chsArr[0]:chtArr[0]}}<text bindtap="changeTap">{{change}}</text></view>
   <view class="mailBox" wx:if="{{mail}}">

@@ -1,0 +1,8 @@
+<template name="tabBar">  
+  <view class="tabBar">
+    <navigator wx:for="{{tabBar}}" wx:for-index="idx" wx:key="idx" class="tabContainer" url="{{'../'+item.mod+'/'+item.mod}}" open-type="redirect">
+      <view class="{{current===idx?'icon'+idx+'_ch':'icon'+idx+'_un'}}"></view>
+      <text class="{{current===idx?'active':''}}">{{item.name}}</text> 
+    </navigator>
+  </view>
+</template>

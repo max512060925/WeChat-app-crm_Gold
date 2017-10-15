@@ -38,7 +38,32 @@ Page({
     qrTel: '',
     cover: true,
     shopImg: '',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    tabBarChs: [{
+      mod: 'gold',
+      name: '每日金价'
+    },
+    {
+      mod: 'location',
+      name: '门店'
+    },
+    {
+      mod: 'vip',
+      name: '会员'
+    }],
+    tabBarCht: [{
+      mod: 'gold',
+      name: '每日金價'
+    },
+    {
+      mod: 'location',
+      name: '門店'
+    },
+    {
+      mod: 'vip',
+      name: '會員'
+    }],
+    current: 1
   },
   onLoad: function () {
     wx.showLoading({ title: 'loading...' });
@@ -48,7 +73,7 @@ Page({
       key: 'XSOBZ-NDQW4-ZSJUS-DMAHL-5SYTS-XZBRH'
     });
     wx.request({
-      url: 'https://cssminabackend.oookini.com/v1/district',
+      url: 'https://cssminabackend.oookini.com/v1/district' + '?lang=' + that.data.language,
       header: {
         'content-type': 'application/json'
       },
@@ -78,7 +103,7 @@ Page({
                   for (let j in cityObj[k]) {
                     if (cityObj[k][j] === r.result.address_component.city) {
                       wx.request({
-                        url: 'https://cssminabackend.oookini.com/v1/' + j + '/stores',
+                        url: 'https://cssminabackend.oookini.com/v1/' + j + '/stores' + '?lang=' + that.data.language,
                         header: {
                           'content-type': 'application/json'
                         },
@@ -109,7 +134,7 @@ Page({
           },
           fail: function () {
             wx.request({
-              url: 'https://cssminabackend.oookini.com/v1/35/stores',
+              url: 'https://cssminabackend.oookini.com/v1/35/stores' + '?lang=' + that.data.language,
               header: {
                 'content-type': 'application/json'
               },
@@ -199,13 +224,13 @@ Page({
     for (let k in this.data.cityO[this.data.citys[this.data.val[0]]]) {
       if (c === this.data.cityO[this.data.citys[this.data.val[0]]][k]) {
         wx.request({
-          url: 'https://cssminabackend.oookini.com/v1/' + k + '/stores',
+          url: 'https://cssminabackend.oookini.com/v1/' + k + '/stores' + '?lang=' + that.data.language,
           header: {
             'content-type': 'application/json'
           },
           data: {
             latitude: that.data.location.latitude,
-            longitude: that.data.location.longitude
+            longitude: that.data.location.longitude,
           },
           success: function (resp) {
             let resArr = resp.data.data;

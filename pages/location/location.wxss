@@ -1,4 +1,7 @@
 /**index.wxss**/
+page{
+  padding-bottom: 10vh;
+}
 #container{
   height: 100vh;
   -webkit-overflow-scrolling : touch; 

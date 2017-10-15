@@ -101,7 +101,32 @@ Page({
     src: '',
     qrContainer: false,
     minutes: '',
-    seconds: ''
+    seconds: '',
+    tabBarChs: [{
+      mod: 'gold',
+      name: '每日金价'
+    },
+    {
+      mod: 'location',
+      name: '门店'
+    },
+    {
+      mod: 'vip',
+      name: '会员'
+    }],
+    tabBarCht: [{
+      mod: 'gold',
+      name: '每日金價'
+    },
+    {
+      mod: 'location',
+      name: '門店'
+    },
+    {
+      mod: 'vip',
+      name: '會員'
+    }],
+    current: 2
   },
 
   /**

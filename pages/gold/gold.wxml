@@ -1,5 +1,7 @@
 <!--location.wxml-->
-<view class="title"><button type="default" size="mini" plain="false"  bindtap="changeLanguage" class="languageBtn">{{language==='chs'?'繁体':'简体'}}</button>{{language==='chs'?chsArr[0]:chtArr[0]}}<text>{{date}}</text></view>
+<import src="../../template/tabBar.wxml" />  
+<template is="tabBar" data="{{tabBar: language==='chs'?tabBarChs:tabBarCht,current:current}}"/>  
+<view class="title"><button type="default" plain="false"  bindtap="changeLanguage" class="languageBtn">{{language==='chs'?'简':'繁'}}</button>{{language==='chs'?chsArr[0]:chtArr[0]}}<text>{{date}}</text></view>
 <view wx:for="{{gold}}" class="{{language==='chs'?'goldBox':'goldBox2'}}">
   <view class="goldTitle">{{item.type}}<text> ({{language==='chs'?chsArr[1]:chtArr[1]}})</text></view>
   <view class="line">{{language==='chs'?chsArr[2]:chtArr[2]}}:<text>{{item.sell}}</text></view>

@@ -2,6 +2,7 @@
 
 page {
   background: #f8f8f8;
+  padding-bottom: 10vh;
 }
 
 .title {

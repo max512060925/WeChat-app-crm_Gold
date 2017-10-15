@@ -1,4 +1,6 @@
 <!--index.wxml-->
+<import src="../../template/tabBar.wxml" />  
+<template is="tabBar" data="{{tabBar: language==='chs'?tabBarChs:tabBarCht,current:current}}"/>  
 <view id="container" style="overflow:{{overflow}};">
   <view class="listBar">{{language==='chs'?chsArr[0]:chtArr[0]}}
     <text bindtap="tap">{{cont}}</text>
