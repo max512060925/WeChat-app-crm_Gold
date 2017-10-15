@@ -125,7 +125,8 @@ Page({
   onShow: function () {
     let language = getApp().globalData.language
     this.setData({
-      language: getApp().globalData.language
+      language: language,
+      change: language === 'chs' ? '邮箱登录' : '郵箱登錄'
     })
     var that = this;
     wx.getUserInfo({
