@@ -3,7 +3,7 @@ page{
   padding-bottom: 10vh;
 }
 #container{
-  height: 100vh;
+  height: 90vh;
   -webkit-overflow-scrolling : touch; 
 }
 .listBar {

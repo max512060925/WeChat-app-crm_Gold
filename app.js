@@ -12,8 +12,7 @@ App({
     }
   },
   globalData: {
-    language: 'chs',
-    current: 0
+    language: 'chs'
   },
   currentPage(i){
     if (i !== this.globalData.current){
