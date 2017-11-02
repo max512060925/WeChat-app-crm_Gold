@@ -48,7 +48,7 @@ page {
 .line {
   margin-top: calc(90vh*(8/276.5));
   font-size: calc(90vh*(7/276.5));
-  color: #9b9b9b;
+  /* color: #9b9b9b; */
   height: calc(90vh*(10/276.5));
   line-height: calc(90vh*(10/276.5));
   float:left;

@@ -4,7 +4,7 @@ page{
 }
 .languageBtn{
   margin-top: calc(100vh*(6/276.5));
-  float: left;
+  float: right;
   height:calc(100vh*(12/276.5));
   font-size: calc(100vh*(6/276.5));
   line-height: calc(100vh*(12/276.5));

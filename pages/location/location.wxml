@@ -3,8 +3,10 @@
 <template is="tabBar" data="{{tabBar: language==='chs'?tabBarChs:tabBarCht,current:current}}"/>  
 <view id="container" style="overflow:{{overflow}};">
   <view class="listBar">{{language==='chs'?chsArr[0]:chtArr[0]}}
+  <button type="default" plain="false"  bindtap="changeLanguage" class="languageBtn">{{language==='chs'?'内地':'香港'}}</button>
     <text bindtap="tap">{{cont}}</text>
     <image src="../../img/location.png" bindtap="tap"></image>
+    
   </view>
   <view wx:for="{{cityShow}}" class="cityBox" bindtap="cityShowTap" data-qr="{{item.qrcode}}" data-name="{{item.name}}" data-tel="{{item.phone}}">
     <image src="../../img/qr.png"></image>

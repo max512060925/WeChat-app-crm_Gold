@@ -272,6 +272,29 @@ Page({
       overflow: 'scroll'
     })
   },
+  changeLanguage() {
+    if (this.data.language === 'chs') {
+      this.setData({
+        language: 'cht'
+      })
+      getApp().globalData.language = 'cht'
+      wx.setStorage({
+        key: "language",
+        data: "cht"
+      })
+      this.onLoad()
+    } else {
+      this.setData({
+        language: 'chs'
+      })
+      getApp().globalData.language = 'chs'
+      wx.setStorage({
+        key: "language",
+        data: "chs"
+      })
+      this.onLoad()
+    }
+  },
   phoneCall: function (e) {
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phonecall.replace(/\-/gi, "")

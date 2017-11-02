@@ -2,6 +2,7 @@
 <import src="../../template/tabBar.wxml" />  
 <template is="tabBar" data="{{tabBar: language==='chs'?tabBarChs:tabBarCht,current:current}}"/>  
 <view class="{{language==='chs'?'loginChs':'loginCht'}}" wx:if="{{login}}">
+<button type="default" plain="false"  bindtap="changeLanguage" class="languageBtn">{{language==='chs'?'内地':'香港'}}</button>
   <view class="loginTitle">{{language==='chs'?chsArr[0]:chtArr[0]}}<text bindtap="changeTap">{{change}}</text></view>
   <view class="mailBox" wx:if="{{mail}}">
     <input placeholder="{{language==='chs'?chsArr[1]:chtArr[1]}}" type="text" bindinput="bindMailInput" />
@@ -19,7 +20,7 @@
   <view class="confirm" bindtap="confirm">{{language==='chs'?chsArr[4]:chtArr[4]}}</view>
 </view>
 <view class="user" wx:if="{{user}}">
-  <image src="../../img/banner.png" class="banner"></image>
+  <image src="../../img/banner.png" class="banner" style='display:block;position:relative;'><button type="default" plain="false"  bindtap="changeLanguage" class="languageBtn" style='display:block;position:absolute;top:0;right:0;'>{{language==='chs'?'内地':'香港'}}</button></image>
   <view class="titleBar">
     <image src="{{src}}" bindtap="signOut"></image>
     <view class="titleBox"><text class="name">{{name}}</text><text class="lv">{{lv}}</text></view>
